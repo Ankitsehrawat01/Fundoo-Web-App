@@ -11,5 +11,7 @@ namespace BusinessLayer.Interface
         public UserEntity Registration(UserRegistrationModel userRegistrationModel);
         //Added for Login
         public string Login(UserLoginModel userLoginModel);
+
+        public string ForgetPassword(string email);
     }
 }
