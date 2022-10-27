@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FundooWebApp.Controllers
 {
@@ -76,6 +78,32 @@ namespace FundooWebApp.Controllers
                 else
                 {
                     return BadRequest(new { success = false, message = "Reset UnSuccessful" });
+                }
+
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("ResetPassword")]
+
+        public IActionResult ResetPassword(string newPassword, string confirmPassword)
+        {
+            try
+            {
+                var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+                var resultLog = iuserBL.ResetPassword(email, newPassword, confirmPassword);
+
+                if (resultLog != null)
+                {
+                    return Ok(new { success = true, message = "Password Reset Successful" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Password Reset UnSuccessful" });
                 }
 
             }

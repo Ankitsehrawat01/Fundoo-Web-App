@@ -120,5 +120,26 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public string ResetPassword(string email, string newPassword, string confirmPassword)
+        {
+            try
+            {
+                if (newPassword.Equals(confirmPassword))
+                {
+                    var user = fundooContext.UserTable.FirstOrDefault(x => x.Email == email);
+                    user.Password = newPassword;
+                    fundooContext.SaveChanges();
+                    return user.Password;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
