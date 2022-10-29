@@ -11,5 +11,6 @@ namespace BusinessLayer.Interface
         public NotesEntity createNotes(NotesModel notesModel, long userId);
         public IEnumerable<NotesEntity> RetrieveNotesbyUserID(long userId);
         public IEnumerable<NotesEntity> RetrieveNotesbyNoteID(long userId, long noteId);
+        public bool DeleteNotes(int noteId);
     }
 }

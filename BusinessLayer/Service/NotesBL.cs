@@ -53,5 +53,19 @@ namespace BusinessLayer.Service
                 }
             }
         }
+        public bool DeleteNotes(int noteId)
+        {
+            try
+            {
+                if (iNotesRL.DeleteNotes(noteId))
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -93,5 +93,25 @@ namespace FundooWebApp.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpDelete]
+        [Route("Delete by NoteId")]
+        public ActionResult DeleteNotes(int noteId)
+        {
+            try
+            {
+                if (iNotesBL.DeleteNotes(noteId))
+                {
+                    return this.Ok(new { success = true, message = "Note Deleted Successfully" });
+                }
+                return this.BadRequest(new { success = true, message = "Note Deletion Failed" });
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
     }
 }
