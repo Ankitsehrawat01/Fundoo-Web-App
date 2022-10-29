@@ -88,8 +88,7 @@ namespace FundooWebApp.Controllers
                 }
             }
             catch (Exception)
-            {
-
+            { 
                 throw;
             }
         }
@@ -108,10 +107,32 @@ namespace FundooWebApp.Controllers
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
+        [Authorize]
+        [HttpPut]
+        [Route("Update")]
+        public IActionResult UpdateNotesData(long noteId, NotesModel notesModel)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+                var result = iNotesBL.UpdateNotesData(userId, noteId, notesModel);
 
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Update data Successful ", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Update data UnSuccessful" });
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

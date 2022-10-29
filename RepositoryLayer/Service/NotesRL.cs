@@ -102,5 +102,36 @@ namespace RepositoryLayer.Service
                 return false;
             }
         }
+        public NotesEntity UpdateNotesData(long userId, long noteId, NotesModel notesModel)
+        {
+            try
+            {
+                var notesEntity = fundooContext.NotesTable.FirstOrDefault(e => e.NoteId == noteId);
+                if (notesEntity != null)
+                {
+                    notesEntity.Title = notesModel.Title;
+                    notesEntity.Discription = notesModel.Discription;
+                    notesEntity.Archive = notesModel.Archive;
+                    notesEntity.Backgroundcolor = notesModel.Backgroundcolor;
+                    notesEntity.Pin = notesModel.Pin;
+                    notesEntity.Reminder = notesModel.Reminder;
+                    notesEntity.Trash = notesModel.Trash;
+                    notesEntity.Created = notesModel.Created;
+                    notesEntity.Edited = notesModel.Edited;
+
+                    fundooContext.SaveChanges();
+                    return notesEntity;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
