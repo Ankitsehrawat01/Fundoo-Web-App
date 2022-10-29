@@ -44,7 +44,7 @@ namespace FundooWebApp.Controllers
         }
         [Authorize]
         [HttpGet]
-        [Route("Retrieve")]
+        [Route("Retrieve by UserId")]
 
         public IActionResult RetrieveNotesbyUserID(long UserId)
         {
@@ -52,6 +52,31 @@ namespace FundooWebApp.Controllers
             {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
                 var result = iNotesBL.RetrieveNotesbyUserID(userId);
+                if (result != null)
+                {
+
+                    return Ok(new { success = true, message = "Retrieve Successful ", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Retrieve UnSuccessful" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpGet]
+        [Route("Retrieve by NoteId")]
+        public IActionResult RetrieveNotesbyNoteID(long NoteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+                var result = iNotesBL.RetrieveNotesbyNoteID(userId, NoteId);
                 if (result != null)
                 {
 
