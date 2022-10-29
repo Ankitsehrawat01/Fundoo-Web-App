@@ -1,5 +1,6 @@
 ﻿using CommonLayer.Model;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
@@ -48,6 +49,22 @@ namespace RepositoryLayer.Service
                 {
                     return null;
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public IEnumerable<NotesEntity> RetrieveNotesbyUserID(long userId)
+        {
+            try
+            {
+
+                var result = fundooContext.NotesTable.Where(x => x.UserId == userId);
+
+                return result;
+
             }
             catch (Exception)
             {
