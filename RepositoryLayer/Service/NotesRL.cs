@@ -166,14 +166,42 @@ namespace RepositoryLayer.Service
                 if (result.Archive != true)
                 {
                     result.Archive = true;
+                    fundooContext.SaveChanges();
+                    return true;
                 }
                 else
                 {
                     result.Archive = false;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool TrashNotes(long noteId)
+        {
+            try
+            {
+                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId);
+
+                if (result.Trash != true)
+                {
+                    result.Trash = true;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    result.Trash = false;
+                    fundooContext.SaveChanges();
+                    return true;
                 }
 
-                fundooContext.SaveChanges();
-                return true;
+
             }
             catch (Exception)
             {
