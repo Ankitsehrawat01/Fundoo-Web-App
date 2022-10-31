@@ -195,11 +195,11 @@ namespace FundooWebApp.Controllers
 
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Note Moved to Bin Successfully " });
+                    return Ok(new { success = true, message = "Trash Successful " });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "Note not Moved to Bin" });
+                    return BadRequest(new { success = false, message = "Trash Unsuccessful" });
                 }
             }
             catch (Exception e)
