@@ -44,7 +44,7 @@ namespace FundooWebApp.Controllers
         }
         [Authorize]
         [HttpGet]
-        [Route("Retrieve by UserId")]
+        [Route("Retrieve by ")]
 
         public IActionResult RetrieveNotesbyUserID(long UserId)
         {
@@ -70,7 +70,7 @@ namespace FundooWebApp.Controllers
         }
         [Authorize]
         [HttpGet]
-        [Route("Retrieve by NoteId")]
+        [Route("Retrieve")]
         public IActionResult RetrieveNotesbyNoteID(long NoteId)
         {
             try
@@ -94,7 +94,7 @@ namespace FundooWebApp.Controllers
         }
         [Authorize]
         [HttpDelete]
-        [Route("Delete by NoteId")]
+        [Route("Delete")]
         public ActionResult DeleteNotes(int noteId)
         {
             try
@@ -155,6 +155,31 @@ namespace FundooWebApp.Controllers
             }
             catch (Exception e)
             {
+                throw e;
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("Archive")]
+        public IActionResult ArchiveNotes(long noteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+                var result = iNotesBL.ArchiveNotes(noteId);
+
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Archive Successful " });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Archive UnSuccessful" });
+                }
+            }
+            catch (Exception e)
+            {
+
                 throw e;
             }
         }
