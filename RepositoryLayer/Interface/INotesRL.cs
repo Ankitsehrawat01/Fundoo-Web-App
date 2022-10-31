@@ -13,8 +13,9 @@ namespace RepositoryLayer.Interface
         public IEnumerable<NotesEntity> RetrieveNotesbyNoteID(long userId, long noteId);
         public bool DeleteNotes(int noteId);
         public NotesEntity UpdateNotesData(long userId, long noteId, NotesModel notesModel);
-        public bool PinNotes(long noteId);
-        public bool ArchiveNotes(long noteId);
-        public bool TrashNotes(long noteId);
+        public bool PinNotes(long userId,long noteId);
+        public bool ArchiveNotes(long userId, long noteId);
+        public bool TrashNotes(long userId, long noteId);
+        public NotesEntity ChangeBackgroundColor(long userId, long noteId, string Backgroundcolor);
     }
 }

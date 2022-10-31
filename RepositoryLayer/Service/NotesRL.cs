@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepositoryLayer.Service
 {
@@ -133,11 +134,11 @@ namespace RepositoryLayer.Service
                 throw e;
             }
         }
-        public bool PinNotes(long noteId)
+        public bool PinNotes(long userId, long noteId)
         {
             try
             {
-                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId);
+                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId && x.UserId==userId);
                 if (result.Pin == false)
                 {
                     result.Pin = true;
@@ -157,11 +158,11 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public bool ArchiveNotes(long noteId)
+        public bool ArchiveNotes(long userId, long noteId)
         {
             try
             {
-                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId);
+                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
 
                 if (result.Archive != true)
                 {
@@ -182,11 +183,11 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public bool TrashNotes(long noteId)
+        public bool TrashNotes(long userId, long noteId)
         {
             try
             {
-                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId);
+                var result = fundooContext.NotesTable.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
 
                 if (result.Trash != true)
                 {
@@ -208,6 +209,31 @@ namespace RepositoryLayer.Service
 
                 throw;
             }
+        }
+        public NotesEntity ChangeBackgroundColor(long userId, long noteId, string Backgroundcolor)
+        {
+            try
+            {
+                var notesEntityobj = fundooContext.NotesTable.FirstOrDefault(e => e.NoteId == noteId);
+                if (notesEntityobj != null)
+                {
+                    notesEntityobj.Backgroundcolor = Backgroundcolor;
+
+                    fundooContext.SaveChanges();
+                    return notesEntityobj;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
         }
     }
 }

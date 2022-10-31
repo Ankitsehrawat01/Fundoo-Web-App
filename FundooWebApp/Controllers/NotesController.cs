@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
+using RepositoryLayer.Context;
+using System.Threading.Tasks;
 
 namespace FundooWebApp.Controllers
 {
@@ -142,7 +144,7 @@ namespace FundooWebApp.Controllers
             try
             {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
-                var result = iNotesBL.PinNotes(noteId);
+                var result = iNotesBL.PinNotes(userId, noteId);
 
                 if (result != null)
                 {
@@ -166,7 +168,7 @@ namespace FundooWebApp.Controllers
             try
             {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
-                var result = iNotesBL.ArchiveNotes(noteId);
+                var result = iNotesBL.ArchiveNotes(userId, noteId);
 
                 if (result != null)
                 {
@@ -191,7 +193,7 @@ namespace FundooWebApp.Controllers
             try
             {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
-                var result = iNotesBL.TrashNotes(noteId);
+                var result = iNotesBL.TrashNotes(userId, noteId);
 
                 if (result != null)
                 {
@@ -205,6 +207,30 @@ namespace FundooWebApp.Controllers
             catch (Exception e)
             {
 
+                throw e;
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("BackgroundColor")]
+        public IActionResult BackgroundColor(long noteId, string Backgroundcolor)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+                var result = iNotesBL.ChangeBackgroundColor(userId, noteId, Backgroundcolor);
+
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Bg color data Successful ", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Bg color data UnSuccessful" });
+                }
+            }
+            catch (Exception e)
+            {
                 throw e;
             }
         }
