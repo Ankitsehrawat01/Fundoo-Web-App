@@ -14,30 +14,29 @@ namespace RepositoryLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: true),
                     UserId = table.Column<long>(nullable: false),
-                    NoteId = table.Column<long>(nullable: false),
-                    NotesNoteId = table.Column<long>(nullable: true)
+                    NoteID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_collabratorTable", x => x.CollabratorId);
                     table.ForeignKey(
-                        name: "FK_collabratorTable_NotesTable_NotesNoteId",
-                        column: x => x.NotesNoteId,
+                        name: "FK_collabratorTable_NotesTable_NoteID",
+                        column: x => x.NoteID,
                         principalTable: "NotesTable",
                         principalColumn: "NoteId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_collabratorTable_UserTable_UserId",
                         column: x => x.UserId,
                         principalTable: "UserTable",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_collabratorTable_NotesNoteId",
+                name: "IX_collabratorTable_NoteID",
                 table: "collabratorTable",
-                column: "NotesNoteId");
+                column: "NoteID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_collabratorTable_UserId",

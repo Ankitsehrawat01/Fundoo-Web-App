@@ -29,10 +29,7 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("NoteId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("NotesNoteId")
+                    b.Property<long>("NoteID")
                         .HasColumnType("bigint");
 
                     b.Property<long>("UserId")
@@ -40,7 +37,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("CollabratorId");
 
-                    b.HasIndex("NotesNoteId");
+                    b.HasIndex("NoteID");
 
                     b.HasIndex("UserId");
 
@@ -122,7 +119,9 @@ namespace RepositoryLayer.Migrations
                 {
                     b.HasOne("RepositoryLayer.Entity.NotesEntity", "Notes")
                         .WithMany()
-                        .HasForeignKey("NotesNoteId");
+                        .HasForeignKey("NoteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RepositoryLayer.Entity.UserEntity", "User")
                         .WithMany()
