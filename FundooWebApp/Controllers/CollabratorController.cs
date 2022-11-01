@@ -20,20 +20,18 @@ namespace FundooWebApp.Controllers
         [Authorize]
         [HttpPost]
         [Route("Create")]
-        public IActionResult CreateCollab(CollabratorModel collabratorModel, long noteId)
+        public IActionResult CreateCollab(string Email, long noteId)
         {
             try
             {
-                var userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
-
-                var result = iCollabratorBL.CreateCollabrator(collabratorModel, userId, noteId);
+                var result = iCollabratorBL.CreateCollabrator(Email, noteId);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Collabrator Created", data = result });
+                    return Ok(new { success = true, message = "Created notes successful", data = result });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "colabrator Not Created" });
+                    return BadRequest(new { success = false, message = "Created notes unsuccessful", data = result });
 
                 }
             }

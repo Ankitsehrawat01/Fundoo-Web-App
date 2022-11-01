@@ -16,11 +16,11 @@ namespace BusinessLayer.Service
         {
             this.iCollabratorRL = iCollabratorRL;
         }
-        public CollabratorEntity CreateCollabrator(CollabratorModel collabratorModel, long userId, long noteId)
+        public CollabratorEntity CreateCollabrator(string email, long noteId)
         {
             try
             {
-                return iCollabratorRL.CreateCollabrator(collabratorModel, userId, noteId);
+                return iCollabratorRL.CreateCollabrator(email, noteId);
             }
             catch (Exception)
             {

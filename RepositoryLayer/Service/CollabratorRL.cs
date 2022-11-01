@@ -14,24 +14,26 @@ namespace RepositoryLayer.Service
     {
         private readonly FundooContext fundooContext;
 
-        private readonly IConfiguration iconfiguration;
-        public CollabratorRL(FundooContext fundooContext, IConfiguration iconfiguration)
+        public CollabratorRL(FundooContext fundooContext)
         {
             this.fundooContext = fundooContext;
-            this.iconfiguration = iconfiguration;
         }
-        public CollabratorEntity CreateCollabrator(CollabratorModel collabratorModel,long userId ,long noteId)
+
+        public CollabratorEntity CreateCollabrator(string email, long noteId)
         {
             try
             {
-                CollabratorEntity collabratorEntityobj = new CollabratorEntity();
-                var result = fundooContext.collabratorTable.Where(x => x.UserId == userId && x.NoteId==noteId);
-                if (result != null)
+                var NoteResult = fundooContext.NotesTable.Where(x => x.NoteId == noteId).FirstOrDefault();
+                var EmailResult = fundooContext.UserTable.Where(x => x.Email == email).FirstOrDefault();
+
+                if (EmailResult != null && NoteResult != null)
                 {
-                    collabratorEntityobj.NoteId = noteId;
-                    collabratorEntityobj.UserId = userId;   
-                    collabratorEntityobj.Email = collabratorModel.Email;
-                    fundooContext.collabratorTable.Add(collabratorEntityobj);
+                    CollabratorEntity collabratorEntityobj = new CollabratorEntity();
+                    collabratorEntityobj.Email = EmailResult.Email;
+                    collabratorEntityobj.NoteId = NoteResult.NoteId;
+                    collabratorEntityobj.UserId = EmailResult.UserId;
+
+                    fundooContext.Add(collabratorEntityobj);
                     fundooContext.SaveChanges();
                     return collabratorEntityobj;
                 }
@@ -42,7 +44,6 @@ namespace RepositoryLayer.Service
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
