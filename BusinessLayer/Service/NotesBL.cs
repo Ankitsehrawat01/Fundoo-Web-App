@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using RepositoryLayer.Service;
@@ -119,6 +120,17 @@ namespace BusinessLayer.Service
             try
             {
                 return iNotesRL.ChangeBackgroundColor(userId, noteId, Backgroundcolor);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public string Image(IFormFile image, long noteId, long userId)
+        {
+            try
+            {
+                return iNotesRL.Image(image, noteId, userId);
             }
             catch (Exception e)
             {

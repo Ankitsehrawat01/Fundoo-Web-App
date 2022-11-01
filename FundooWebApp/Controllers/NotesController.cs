@@ -234,5 +234,29 @@ namespace FundooWebApp.Controllers
                 throw e;
             }
         }
+        [Authorize]
+        [HttpPut]
+        [Route("Image")]
+
+        public IActionResult NotesImage(IFormFile Image, long noteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+                var result = iNotesBL.Image(Image, noteId, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Image Added Successfully " });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Image Addition UnSuccessful" });
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
