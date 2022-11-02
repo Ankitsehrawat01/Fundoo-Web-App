@@ -54,11 +54,36 @@ namespace FundooWebApp.Controllers
                 if (result != null)
                 {
 
-                    return Ok(new { success = true, message = "Label Deleted" });
+                    return Ok(new { success = true, message = "Label Deleted", data = result });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "Label not Deleted" });
+                    return BadRequest(new { success = false, message = "Label not Deleted", data = result });
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpGet]
+        [Route("Retrive")]
+
+        public IActionResult LabelRetrive(long labelId)
+        {
+            try
+            {
+                var result = iLabelBL.RetrieveLabel(labelId);
+
+                if (result != null)
+                {
+
+                    return Ok(new { success = true, message = "Label Retrived", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Label not Retrived", data = result });
                 }
             }
             catch (System.Exception)

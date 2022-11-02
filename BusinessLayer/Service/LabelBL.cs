@@ -37,5 +37,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public IEnumerable<LabelEntity> RetrieveLabel(long labelId)
+        {
+            try
+            {
+                return iLabelRL.RetrieveLabel(labelId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
