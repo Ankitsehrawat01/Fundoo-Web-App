@@ -8,5 +8,6 @@ namespace BusinessLayer.Interface
     public interface ILabelBL
     {
         public LabelEntity CreateLabel(string label_Name, long noteId, long userId);
+        public bool DeleteLabel(long labelId);
     }
 }

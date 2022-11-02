@@ -30,7 +30,7 @@ namespace RepositoryLayer.Service
                     labelEntityobj.NoteId = NoteResult.NoteId;
                     labelEntityobj.UserId = userId;
 
-                    fundooContext.Add(labelEntityobj);
+                    fundooContext.LabelTable.Add(labelEntityobj);
                     fundooContext.SaveChanges();
                     return labelEntityobj;
                 }
@@ -41,6 +41,24 @@ namespace RepositoryLayer.Service
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+        public bool DeleteLabel(long labelId)
+        {
+            try
+            {
+                var result = fundooContext.LabelTable.FirstOrDefault(x => x.LabelId == labelId);
+
+                fundooContext.LabelTable.Remove(result);
+
+                fundooContext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

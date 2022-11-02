@@ -19,10 +19,12 @@ namespace FundooWebApp.Controllers
         [Authorize]
         [HttpPost]
         [Route("Create")]
-        public IActionResult CreateCollab(long noteId, long userId, string label_Name)
+        public IActionResult LabelCreation(long noteId, string label_Name)
         {
             try
             {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+
                 var result = iLabelBL.CreateLabel(label_Name, noteId, userId);
                 if (result != null)
                 {
@@ -32,6 +34,31 @@ namespace FundooWebApp.Controllers
                 {
                     return BadRequest(new { success = false, message = "Label not Created", data = result });
 
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpDelete]
+        [Route("Delete")]
+
+        public IActionResult LabelDelete(long labelId)
+        {
+            try
+            {
+                var result = iLabelBL.DeleteLabel(labelId);
+
+                if (result != null)
+                {
+
+                    return Ok(new { success = true, message = "Label Deleted" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Label not Deleted" });
                 }
             }
             catch (System.Exception)

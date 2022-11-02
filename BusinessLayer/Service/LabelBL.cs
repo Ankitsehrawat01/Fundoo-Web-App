@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interface;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
+using RepositoryLayer.Service;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,17 @@ namespace BusinessLayer.Service
             try
             {
                 return iLabelRL.CreateLabel(label_Name, noteId, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool DeleteLabel(long labelId)
+        {
+            try
+            {
+                return iLabelRL.DeleteLabel(labelId);
             }
             catch (Exception)
             {
