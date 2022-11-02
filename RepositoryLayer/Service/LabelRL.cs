@@ -44,23 +44,5 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public bool DeleteLabel(long labelId)
-        {
-            try
-            {
-                var result = fundooContext.LabelTable.FirstOrDefault(x => x.LabelId == labelId);
-
-                fundooContext.LabelTable.Remove(result);
-
-                fundooContext.SaveChanges();
-                return true;
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

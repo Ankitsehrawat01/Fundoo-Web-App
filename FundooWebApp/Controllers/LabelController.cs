@@ -41,30 +41,5 @@ namespace FundooWebApp.Controllers
                 throw;
             }
         }
-        [Authorize]
-        [HttpDelete]
-        [Route("Delete")]
-
-        public IActionResult LabelDelete(long labelId)
-        {
-            try
-            {
-                var result = iLabelBL.DeleteLabel(labelId);
-
-                if (result != null)
-                {
-
-                    return Ok(new { success = true, message = "Label Deleted" });
-                }
-                else
-                {
-                    return BadRequest(new { success = false, message = "Label not Deleted" });
-                }
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
-        }
     }
 }
