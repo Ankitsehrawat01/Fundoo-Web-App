@@ -43,6 +43,8 @@ namespace FundooWebApp
             services.AddTransient<INotesRL, NotesRL>();
             services.AddTransient<ICollabratorBL, CollabratorBL>();
             services.AddTransient<ICollabratorRL, CollabratorRL>();
+            services.AddTransient<ILabelBL, LabelBL>();
+            services.AddTransient<ILabelRL, LabelRL>();
             //swagger implementation
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
