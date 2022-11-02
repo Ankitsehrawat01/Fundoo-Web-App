@@ -91,6 +91,30 @@ namespace FundooWebApp.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpPut]
+        [Route("Update")]
 
+        public IActionResult LabelUpdate(long labelId, string label_Name)
+        {
+            try
+            {
+                var result = iLabelBL.UpdateLabel(label_Name, labelId);
+
+                if (result != null)
+                {
+
+                    return Ok(new { success = true, message = "Label Updated", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Label not Updated", data = result });
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using RepositoryLayer.Context;
+﻿using CommonLayer.Model;
+using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using System;
@@ -82,6 +83,30 @@ namespace RepositoryLayer.Service
             catch (Exception)
             {
                 throw;
+            }
+        }
+        public LabelEntity UpdateLabel(string label_Name, long labelId)
+        {
+            try
+            {
+                var notesEntity = fundooContext.LabelTable.FirstOrDefault(e => e.LabelId == labelId);
+                LabelEntity labelEntityobj = new LabelEntity();
+                if (notesEntity != null)
+                {
+                    labelEntityobj.Label_Name = label_Name;
+
+                    fundooContext.SaveChanges();
+                    return labelEntityobj;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }
