@@ -27,5 +27,16 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public bool DeleteCollabrator(long collabratorId, long noteId)
+        {
+            try
+            {
+                return iCollabratorRL.DeleteCollabrator(collabratorId, noteId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

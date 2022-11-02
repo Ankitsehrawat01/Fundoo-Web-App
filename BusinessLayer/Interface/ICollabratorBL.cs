@@ -9,5 +9,6 @@ namespace BusinessLayer.Interface
     public interface ICollabratorBL
     {
         public CollabratorEntity CreateCollabrator(string email, long noteId);
+        public bool DeleteCollabrator(long collabratorId, long noteId);
     }
 }

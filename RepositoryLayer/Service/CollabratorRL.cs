@@ -47,5 +47,23 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool DeleteCollabrator(long collabratorId, long noteId)
+        {
+            try
+            {
+                var result = fundooContext.collabratorTable.FirstOrDefault(x => x.CollabratorId == collabratorId);
+
+                fundooContext.collabratorTable.Remove(result);
+
+                fundooContext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace RepositoryLayer.Interface
     public interface ICollabratorRL
     {
         public CollabratorEntity CreateCollabrator(string email, long noteId);
+        public bool DeleteCollabrator(long collabratorId, long noteId);
     }
 }
