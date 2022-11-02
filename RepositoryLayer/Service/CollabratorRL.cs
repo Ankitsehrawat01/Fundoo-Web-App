@@ -65,5 +65,19 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public IEnumerable<CollabratorEntity> RetrieveCollabrator(long noteId)
+        {
+            try
+            {
+                var result = fundooContext.collabratorTable.Where(x => x.NoteId == noteId);
+
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -27,11 +27,11 @@ namespace FundooWebApp.Controllers
                 var result = iCollabratorBL.CreateCollabrator(Email, noteId);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Created notes successful", data = result });
+                    return Ok(new { success = true, message = "Collabrator Created", data = result });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "Created notes unsuccessful", data = result });
+                    return BadRequest(new { success = false, message = "Collabrator not Created", data = result });
 
                 }
             }
@@ -55,11 +55,11 @@ namespace FundooWebApp.Controllers
                 if (result != null)
                 {
 
-                    return Ok(new { success = true, message = "Data Deleted Successful" });
+                    return Ok(new { success = true, message = "Collabrator Deleted" });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "Data Deletetion UnSuccessful" });
+                    return BadRequest(new { success = false, message = "Collabrator not Deleted" });
                 }
             }
             catch (System.Exception)
@@ -67,5 +67,30 @@ namespace FundooWebApp.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpGet]
+        [Route("Retrieve")]
+        public IActionResult Retrievecollab(long NoteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "UserId").Value);
+                var result = iCollabratorBL.RetrieveCollabrator(NoteId);
+                if (result != null)
+                {
+
+                    return Ok(new { success = true, message = "Retrieve Successful ", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Retrieve UnSuccessful" });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

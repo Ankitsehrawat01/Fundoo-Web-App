@@ -38,5 +38,16 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public IEnumerable<CollabratorEntity> RetrieveCollabrator(long noteId)
+        {
+            try
+            {
+                return iCollabratorRL.RetrieveCollabrator(noteId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
