@@ -99,7 +99,7 @@ namespace FundooWebApp.Controllers
         {
             try
             {
-                var result = iLabelBL.UpdateLabel(label_Name, labelId);
+                var result = iLabelBL.UpdateLabel(label_Name, labelId );
 
                 if (result != null)
                 {

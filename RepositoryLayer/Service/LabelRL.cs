@@ -89,14 +89,13 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var notesEntity = fundooContext.LabelTable.FirstOrDefault(e => e.LabelId == labelId);
-                LabelEntity labelEntityobj = new LabelEntity();
-                if (notesEntity != null)
+                var labelEntity = fundooContext.LabelTable.FirstOrDefault(e => e.LabelId == labelId);
+                if (labelEntity != null)
                 {
-                    labelEntityobj.Label_Name = label_Name;
+                    labelEntity.Label_Name = label_Name;
 
                     fundooContext.SaveChanges();
-                    return labelEntityobj;
+                    return labelEntity;
                 }
                 else
                 {
