@@ -6,6 +6,7 @@ using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -18,6 +19,8 @@ namespace RepositoryLayer.Service
         private readonly FundooContext fundooContext;
 
         private readonly IConfiguration iconfiguration;
+        //key for encryption
+        public static string Key = "ankit@@sehrawat@";
         public UserRL(FundooContext fundooContext, IConfiguration iconfiguration)
         {
             this.fundooContext = fundooContext;
@@ -31,7 +34,7 @@ namespace RepositoryLayer.Service
                 userEntityobj.FirstName = userRegistrationModel.FirstName;
                 userEntityobj.LastName = userRegistrationModel.LastName;
                 userEntityobj.Email = userRegistrationModel.Email;
-                userEntityobj.Password = userRegistrationModel.Password;
+                userEntityobj.Password = EncryptPassword(userRegistrationModel.Password);
                 fundooContext.UserTable.Add(userEntityobj);
                 int result = fundooContext.SaveChanges();
                 if(result != 0)
@@ -140,6 +143,14 @@ namespace RepositoryLayer.Service
             {
                 throw;
             }
+        }
+        public string EncryptPassword(string Password)
+        {
+            if(string.IsNullOrEmpty(Password))
+                return "";
+            Password += Key;
+            var passwordBytes = Encoding.UTF8.GetBytes(Password);
+            return Convert.ToBase64String(passwordBytes);
         }
     }
 }
