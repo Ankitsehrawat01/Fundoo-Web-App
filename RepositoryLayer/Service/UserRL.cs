@@ -19,8 +19,9 @@ namespace RepositoryLayer.Service
         private readonly FundooContext fundooContext;
 
         private readonly IConfiguration iconfiguration;
-        //key for encryption
-        public static string Key = "ankit@@sehrawat@";
+
+        public string Key = "ankit@@sehrawat@@";
+
         public UserRL(FundooContext fundooContext, IConfiguration iconfiguration)
         {
             this.fundooContext = fundooContext;
@@ -58,11 +59,10 @@ namespace RepositoryLayer.Service
             try
             {
                 //query to check only for email and password
-                var resultLog = fundooContext.UserTable.Where(x => x.Email == userLoginModel.Email && x.Password == userLoginModel.Password).FirstOrDefault();
+                var resultLog = fundooContext.UserTable.Where(x => x.Email == userLoginModel.Email && x.Password == EncryptPassword(userLoginModel.Password)).FirstOrDefault();
 
-
-                if (resultLog != null)
-                {
+                if (resultLog != null && DecryptPassword(resultLog.Password) == userLoginModel.Password)
+                    {
                     //taken userLoginModel to get the stored data used for login
                     //userLoginModel.Email = resultLog.Email;
                     //userLoginModel.Password = resultLog.Password;
@@ -74,7 +74,6 @@ namespace RepositoryLayer.Service
                 {
                     return null;
                 }
-
             }
             catch (Exception)
             {
@@ -99,7 +98,6 @@ namespace RepositoryLayer.Service
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
-
         }
         public string ForgetPassword(string email)
         {
@@ -144,13 +142,49 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public string EncryptPassword(string Password)
+        public string EncryptPassword(string password)
         {
-            if(string.IsNullOrEmpty(Password))
-                return "";
-            Password += Key;
-            var passwordBytes = Encoding.UTF8.GetBytes(Password);
-            return Convert.ToBase64String(passwordBytes);
+            try
+            {
+                if (string.IsNullOrEmpty(password))
+                {
+                    return "";
+                }
+                else
+                {
+                    password += Key;
+                    var passwordBytes = Encoding.UTF8.GetBytes(password);
+                    return Convert.ToBase64String(passwordBytes);
+                } 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public string DecryptPassword(string base64EncodeData)
+        {
+            try
+            {
+                string Key = "ankit@@sehrawat@@";
+                if (string.IsNullOrEmpty(base64EncodeData))
+                {
+                    return "";
+                }
+                else
+                {
+                    var base64EncodeBytes = Convert.FromBase64String(base64EncodeData);
+                    var result = Encoding.UTF8.GetString(base64EncodeBytes);
+                    result = result.Substring(0, result.Length - Key.Length);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
