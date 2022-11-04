@@ -13,6 +13,7 @@ using RepositoryLayer.Entity;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace FundooWebApp.Controllers
 {
@@ -27,12 +28,15 @@ namespace FundooWebApp.Controllers
         private readonly IDistributedCache distributedCache;
 
         private readonly FundooContext fundooContext;
-        public CollabratorController(ICollabratorBL iCollabratorBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext)
+
+        private readonly ILogger<CollabratorController> logger;
+        public CollabratorController(ICollabratorBL iCollabratorBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext, ILogger<CollabratorController> logger)
         {
             this.iCollabratorBL = iCollabratorBL;
             this.memoryCache = memoryCache;
             this.distributedCache = distributedCache;
             this.fundooContext = fundooContext;
+            this.logger = logger;
         }
         [Authorize]
         [HttpPost]
