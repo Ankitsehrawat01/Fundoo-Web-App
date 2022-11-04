@@ -155,7 +155,7 @@ namespace RepositoryLayer.Service
                     password += Key;
                     var passwordBytes = Encoding.UTF8.GetBytes(password);
                     return Convert.ToBase64String(passwordBytes);
-                } 
+                }
             }
             catch (Exception)
             {
