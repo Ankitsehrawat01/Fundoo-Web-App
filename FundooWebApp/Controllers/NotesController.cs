@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 using RepositoryLayer.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace FundooWebApp.Controllers
 {
@@ -27,12 +28,16 @@ namespace FundooWebApp.Controllers
         private readonly IDistributedCache distributedCache;
 
         private readonly FundooContext fundooContext;
-        public NotesController(INotesBL iNotesBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext)
+
+        private readonly ILogger<NotesController> logger;
+
+        public NotesController(INotesBL iNotesBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext, ILogger<NotesController> logger)
         {
             this.iNotesBL = iNotesBL;
             this.memoryCache = memoryCache;
             this.distributedCache = distributedCache;
             this.fundooContext = fundooContext;
+            this.logger = logger;
         }
 
         [Authorize]
