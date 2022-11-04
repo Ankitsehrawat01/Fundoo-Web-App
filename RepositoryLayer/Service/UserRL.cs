@@ -125,10 +125,10 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                if (newPassword.Equals(confirmPassword))
+                if (EncryptPassword(newPassword).Equals (EncryptPassword(confirmPassword)))
                 {
                     var user = fundooContext.UserTable.FirstOrDefault(x => x.Email == email);
-                    user.Password = newPassword;
+                    user.Password = EncryptPassword(newPassword);
                     fundooContext.SaveChanges();
                     return user.Password;
                 }
@@ -167,7 +167,6 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                string Key = "ankit@@sehrawat@@";
                 if (string.IsNullOrEmpty(base64EncodeData))
                 {
                     return "";
