@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace FundooWebApp.Controllers
 {
@@ -26,12 +27,15 @@ namespace FundooWebApp.Controllers
         private readonly IDistributedCache distributedCache;
 
         private readonly FundooContext fundooContext;
-        public LabelController(ILabelBL iLabelBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext)
+
+        private readonly ILogger<LabelController> logger;
+        public LabelController(ILabelBL iLabelBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext, ILogger<LabelController> logger)
         {
             this.iLabelBL = iLabelBL;
             this.memoryCache = memoryCache;
             this.distributedCache = distributedCache;
             this.fundooContext = fundooContext;
+            this.logger = logger;
         }
         [Authorize]
         [HttpPost]
